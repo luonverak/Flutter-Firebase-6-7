@@ -21,14 +21,17 @@ class InputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
         border: Border.all(
-          width: 2,
+          width: 1,
           color: Colors.grey,
         ),
       ),
       alignment: Alignment.center,
       child: TextField(
         controller: controller,
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(
+          fontSize: 18,
+          color: Color.fromARGB(255, 237, 237, 237),
+        ),
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: prefixIcon,
