@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/auth/controller/user_controller.dart';
+import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:flutter_firebase/auth/view/register_screen.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final email = TextEditingController();
   final password = TextEditingController();
+  final controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +66,18 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              const Buttons(
-                title: 'Login',
+              GestureDetector(
+                onTap: () async {
+                  await controller.loginUser(
+                    UserModel(
+                      email: email.text,
+                      password: password.text.trim(),
+                    ),
+                  );
+                },
+                child: const Buttons(
+                  title: 'Login',
+                ),
               ),
               const SizedBox(
                 height: 20,

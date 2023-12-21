@@ -10,14 +10,39 @@ class UserController extends GetxController {
         email: model.email,
         password: model.password,
       );
+      if (credential.user != null) {
+        Get.snackbar('Success', 'Create account success');
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        Get.snackbar('Error', 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        Get.snackbar('Error', 'The account already exists for that email.');
+      } else {
+        Get.snackbar('Error', 'Something wrong');
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> loginUser(UserModel model) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: model.email,
+        password: model.password,
+      );
+      if (credential.user != null) {
+        Get.snackbar('Success', 'Account login success');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Get.snackbar('Error', 'No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        Get.snackbar('Error', 'Wrong password provided for that user.');
+      } else {
+        Get.snackbar('Error', 'Wrong password provided for that user.');
+      }
     }
   }
 }
