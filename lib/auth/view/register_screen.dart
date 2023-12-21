@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/auth/controller/user_controller.dart';
+import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:get/get.dart';
 
 import '../widget/buttons.dart';
@@ -6,8 +8,11 @@ import '../widget/input_field.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
+
   final email = TextEditingController();
   final password = TextEditingController();
+  final cf_password = TextEditingController();
+  final controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +76,7 @@ class RegisterScreen extends StatelessWidget {
                 height: 30,
               ),
               InputField(
-                controller: password,
+                controller: cf_password,
                 hintText: 'Enter confirm password',
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: IconButton(
@@ -82,8 +87,22 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              const Buttons(
-                title: 'Create Account',
+              GestureDetector(
+                onTap: () async {
+                  if (password.text.trim() == cf_password.text.trim()) {
+                    await controller.createUser(
+                      UserModel(
+                        email: email.text,
+                        password: password.text.trim(),
+                      ),
+                    );
+                  } else {
+                    print('error');
+                  }
+                },
+                child: const Buttons(
+                  title: 'Create Account',
+                ),
               ),
             ],
           ),

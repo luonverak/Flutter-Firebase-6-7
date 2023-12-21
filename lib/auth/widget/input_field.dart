@@ -28,9 +28,9 @@ class InputField extends StatelessWidget {
       alignment: Alignment.center,
       child: TextField(
         controller: controller,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
-          color: Color.fromARGB(255, 237, 237, 237),
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
