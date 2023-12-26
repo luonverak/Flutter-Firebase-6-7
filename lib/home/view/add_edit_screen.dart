@@ -51,11 +51,13 @@ class AddEditScreen extends StatelessWidget {
                         context: context,
                         actions: <BottomSheetAction>[
                           BottomSheetAction(
-                              title: const Text('Choose Gallery'),
-                              onPressed: (context) {}),
+                            title: const Text('Choose Gallery'),
+                            onPressed: (context) {},
+                          ),
                           BottomSheetAction(
-                              title: const Text('Open Camera'),
-                              onPressed: (context) {}),
+                            title: const Text('Open Camera'),
+                            onPressed: (context) {},
+                          ),
                         ],
                         cancelAction: CancelAction(
                           title: const Text('Cancel'),
