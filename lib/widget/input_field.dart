@@ -5,20 +5,22 @@ class InputField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
+    this.obscureText,
   });
   var controller = TextEditingController();
   var hintText;
-  Icon prefixIcon;
+  Icon? prefixIcon;
   IconButton? suffixIcon;
+  bool? obscureText = false;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 65,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(
           width: 1,
@@ -38,6 +40,7 @@ class InputField extends StatelessWidget {
           hintText: hintText,
           suffixIcon: suffixIcon,
         ),
+        obscureText: obscureText!,
       ),
     );
   }

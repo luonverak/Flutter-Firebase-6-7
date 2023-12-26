@@ -4,7 +4,7 @@ import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:get/get.dart';
 
 import '../widget/buttons.dart';
-import '../widget/input_field.dart';
+import '../../widget/input_field.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -59,6 +59,7 @@ class RegisterScreen extends StatelessWidget {
                 controller: email,
                 hintText: 'Enter email address',
                 prefixIcon: const Icon(Icons.email),
+                obscureText: false,
               ),
               const SizedBox(
                 height: 30,
@@ -71,6 +72,7 @@ class RegisterScreen extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(Icons.visibility_off),
                 ),
+                obscureText: false,
               ),
               const SizedBox(
                 height: 30,
@@ -83,6 +85,7 @@ class RegisterScreen extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(Icons.visibility_off),
                 ),
+                obscureText: false,
               ),
               const SizedBox(
                 height: 50,

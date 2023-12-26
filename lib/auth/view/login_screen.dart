@@ -6,13 +6,14 @@ import 'package:flutter_firebase/auth/view/register_screen.dart';
 import 'package:get/get.dart';
 
 import '../widget/buttons.dart';
-import '../widget/input_field.dart';
+import '../../widget/input_field.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final email = TextEditingController();
   final password = TextEditingController();
   final controller = Get.put(UserController());
+  RxBool check = true.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +51,27 @@ class LoginScreen extends StatelessWidget {
                 controller: email,
                 hintText: 'Enter email address',
                 prefixIcon: const Icon(Icons.email),
+                obscureText: false,
               ),
               const SizedBox(
                 height: 30,
               ),
-              InputField(
-                controller: password,
-                hintText: 'Enter password',
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.visibility_off),
+              Obx(
+                () => InputField(
+                  controller: password,
+                  hintText: 'Enter password',
+                  prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      check.value = !check.value;
+                    },
+                    icon: Icon(
+                      (check.value == false)
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                    ),
+                  ),
+                  obscureText: check.value,
                 ),
               ),
               const SizedBox(
@@ -75,8 +86,16 @@ class LoginScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Buttons(
-                  title: 'Login',
+                child: Obx(
+                  () => Visibility(
+                    replacement: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    visible: controller.check.value,
+                    child: const Buttons(
+                      title: 'Login',
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -96,10 +115,13 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: Image.asset('asset/icon/new.png'),
+                  GestureDetector(
+                    onTap: () async => controller.signInWithGoogle(),
+                    child: SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Image.asset('asset/icon/new.png'),
+                    ),
                   ),
                   SizedBox(
                     width: 60,
