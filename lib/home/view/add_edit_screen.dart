@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/home/controller/storage_controller.dart';
+import 'package:get/get.dart';
 
 import '../../widget/input_field.dart';
 
 class AddEditScreen extends StatelessWidget {
   AddEditScreen({super.key});
+  final storageController = Get.put(StorageController());
   final productName = TextEditingController();
   final productPrice = TextEditingController();
   final productDescription = TextEditingController();
@@ -16,7 +21,7 @@ class AddEditScreen extends StatelessWidget {
         title: const Text('Add product'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {},
             icon: const Icon(Icons.save),
           ),
         ],
@@ -30,15 +35,29 @@ class AddEditScreen extends StatelessWidget {
             ),
             Stack(
               children: [
-                Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 250, 50, 50),
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.blue,
+                GetBuilder<StorageController>(
+                  init: StorageController(),
+                  builder: (controller) => Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 250, 50, 50),
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.blue,
+                      ),
+                      image: storageController.file == null
+                          ? const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  'asset/image/grocery-shopping.jpg'))
+                          : DecorationImage(
+                              fit: BoxFit.cover,
+                              image: FileImage(
+                                File(storageController.file!.path),
+                              ),
+                            ),
                     ),
                   ),
                 ),
@@ -46,13 +65,17 @@ class AddEditScreen extends StatelessWidget {
                   right: 20,
                   bottom: 15,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       showAdaptiveActionSheet(
                         context: context,
                         actions: <BottomSheetAction>[
                           BottomSheetAction(
                             title: const Text('Choose Gallery'),
-                            onPressed: (context) {},
+                            onPressed: (context) async {
+                              await storageController
+                                  .openGallery()
+                                  .whenComplete(() => Get.back());
+                            },
                           ),
                           BottomSheetAction(
                             title: const Text('Open Camera'),
