@@ -5,27 +5,31 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StorageController extends GetxController {
-  File? file;
-  final storageRef = FirebaseStorage.instance.ref();
-
+  XFile? file;
+  late String imageURL = "";
   Future openGallery() async {
     try {
       final fileChoose =
           await ImagePicker().pickImage(source: ImageSource.gallery);
-      file = File(fileChoose!.path);
+      file = XFile(fileChoose!.path);
     } catch (e) {
       print(e);
     }
     update();
   }
 
-  // Future uploadFile(XFile files) async {
-  //   var time = DateTime.now();
-  //   final rootImagesRef = storageRef.child("Image/$time-${files.name}");
-  //   try {
-  //     await storageRef.putFile(File(files.name));
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  Future uploadFile(XFile files) async {
+    var time = DateTime.now().toString();
+    final refsRoot = FirebaseStorage.instance.ref();
+    final refsImage = refsRoot.child('ImageProduct');
+    final refsUpload = refsImage.child('$time-${files.name}');
+    try {
+      await refsUpload.putFile(File(file!.path));
+      imageURL = await refsUpload.getDownloadURL();
+      print(imageURL);
+    } catch (e) {
+      print(e);
+    }
+    update();
+  }
 }

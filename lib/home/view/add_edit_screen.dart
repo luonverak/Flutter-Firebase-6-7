@@ -4,7 +4,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/home/controller/storage_controller.dart';
 import 'package:get/get.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../../widget/input_field.dart';
 
 class AddEditScreen extends StatelessWidget {
@@ -21,7 +21,10 @@ class AddEditScreen extends StatelessWidget {
         title: const Text('Add product'),
         actions: [
           IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              await storageController
+                  .uploadFile(XFile(storageController.file!.path));
+            },
             icon: const Icon(Icons.save),
           ),
         ],
