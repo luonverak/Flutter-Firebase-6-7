@@ -1,14 +1,19 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/home/controller/product_controller.dart';
 import 'package:flutter_firebase/home/controller/storage_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../widget/input_field.dart';
+import '../model/product_model.dart';
 
 class AddEditScreen extends StatelessWidget {
   AddEditScreen({super.key});
+  late ProductModel? productModel;
+  final productController = Get.put(ProductController());
   final storageController = Get.put(StorageController());
   final productName = TextEditingController();
   final productPrice = TextEditingController();
@@ -24,6 +29,14 @@ class AddEditScreen extends StatelessWidget {
             onPressed: () async {
               await storageController
                   .uploadFile(XFile(storageController.file!.path));
+              await productController.addProduct(
+                ProductModel(
+                  id: Random().nextInt(10000),
+                  name: productName.text,
+                  price: double.parse(productPrice.text),
+                  image: storageController.imageURL,
+                ),
+              );
             },
             icon: const Icon(Icons.save),
           ),

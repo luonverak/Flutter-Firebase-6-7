@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +23,7 @@ class StorageController extends GetxController {
     final refsImage = refsRoot.child('ImageProduct');
     final refsUpload = refsImage.child('$time-${files.name}');
     try {
-      await refsUpload.putFile(File(file!.path));
+      await refsUpload.putFile(File(files.path));
       imageURL = await refsUpload.getDownloadURL();
       print(imageURL);
     } catch (e) {
