@@ -1,0 +1,68 @@
+Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 3),
+        child: Slidable(
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
+            children: [
+              SlidableAction(
+                borderRadius: BorderRadius.circular(10),
+                onPressed: (context) {},
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+                icon: Icons.edit,
+                label: 'Edit',
+              ),
+              SlidableAction(
+                borderRadius: BorderRadius.circular(10),
+                onPressed: (context) {},
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+            ],
+          ),
+          child: SizedBox(
+            height: 100,
+            width: double.infinity,
+            child: Card(
+              child: Row(
+                children: [
+                  Container(
+                    width: 100,
+                    color: Colors.amber,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Name',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Description',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        'Price',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
